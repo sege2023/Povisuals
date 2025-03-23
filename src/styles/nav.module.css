@@ -1,0 +1,73 @@
+.animatedText {
+    font-family: monospace;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
+  }
+  .navlinks{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+
+  }
+  /* .navlinks.active {
+    display: flex;
+  } */
+  
+  .navlinks button{
+    font-weight: 800;
+    background: b;
+  }
+  .menutoggle {
+    display: none;
+    /* background: none; */
+    position: relative;
+    z-index: 2000;
+    border: none;
+    color: black;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .navlinks {
+      display: none; /* Hide nav links by default on mobile */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: white; /* or your preferred color */
+      z-index: 1000;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* margin: 20px; */
+    
+    }
+  
+    .navlinksactive {
+      display: flex;
+      padding: 20px;
+    }
+  
+    .menutoggle {
+      display: block
+    }
+}
