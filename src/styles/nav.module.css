@@ -1,7 +1,17 @@
+/* .navbar {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1rem 2rem; 
+    background-color: #333; 
+    color: white; 
+    border-bottom: 2px solid #555;
+    width: 100%;
+} */
 .animatedText {
     font-family: monospace;
     font-size: 24px;
-    color: #333;
+    color: red;
     margin-bottom: 10px;
   }
   
@@ -16,9 +26,9 @@
     justify-content: space-around
 
   }
-  /* .navlinks.active {
+  .navlinks.active {
     display: flex;
-  } */
+  }
   
   .navlinks button{
     font-weight: 800;

@@ -1,4 +1,4 @@
-
+/* 
 .imagegrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -38,4 +38,4 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+  } */

@@ -11,7 +11,7 @@ const Footer = () =>{
                 </ul>
                 <p> <Copyright/> 2025 POVISUALS</p>
                 <ul>
-                    <li><a href=""><Gith</a></li>
+                    <li><a href=""></a></li>
                     <li><a href=""></a></li>
                     <li><a href=""></a></li>
                 </ul>

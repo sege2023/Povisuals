@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 *.env
 config.js
+downloaded-images/
 # /api

@@ -28,7 +28,7 @@ const Navbar = () =>{
 
     return(
         <>
-        <nav bg-gray>
+        <nav className={styles.navbar}>
             {/* Animated Text */}
             <div className={styles.animatedText}>
                 {displayText}
