@@ -3,10 +3,10 @@
 import Navbar from "../components/layout/nav"
 // import styles from "@/styles/home.module.css"
 // import "../assets/downloaded-images"
-//  
+import imageData from "../assets/image-manifest.json"
+
 
 const Home = () => {
-  
   return (
     <>
       <Navbar/>
