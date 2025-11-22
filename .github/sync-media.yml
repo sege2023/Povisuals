@@ -1,0 +1,52 @@
+# .github/workflows/sync-media.yml
+name: Sync Media from Google Drive
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install FFmpeg
+        run: sudo apt-get install -y ffmpeg
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Download from Google Drive
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          FOLDER_ID: ${{ secrets.FOLDER_ID }}
+        run: node scripts/download-from-drive.js
+      
+      - name: Process images (Sharp)
+        run: node scripts/process-images.js
+      
+      - name: Process videos (FFmpeg)
+        run: node scripts/process-videos.js
+      
+      - name: Upload to Cloudflare R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
+        run: node scripts/upload-to-r2.js
+      
+      - name: Commit updated manifest
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add src/assets/media-manifest.json
+          git commit -m "chore: sync media from Google Drive" || echo "No changes"
+          git push

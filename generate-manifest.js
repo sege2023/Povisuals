@@ -3,24 +3,27 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 // const path = require('path');
-
+// console.log('Script directory:', __dirname);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Define the path to your image directory and the output JSON file
-const imagesDirectory = path.join(__dirname, 'src','assets','downloaded-images');
+const imagesDirectory = path.join(__dirname, 'public','downloaded-images');
+console.log('Resolved path:', imagesDirectory);
+
+if (!fs.existsSync(imagesDirectory)) {
+  console.error('Directory does not exist:', imagesDirectory);
+  process.exit(1);
+}
 const outputFilePath = path.join(__dirname, 'src','assets', 'image-manifest.json');
 
-// The base URL for your images in production
-// In this example, 'https://your-r2-url.com' would be your R2 bucket public URL
-const baseUrl = '/images/'; // Use a relative path for local development
+
+const baseUrl = '/downloaded-images/'; 
 
 const imageUrls = [];
-// what is used to read a directory?
 fs.readdir(imagesDirectory, (err, files) => {
   if (err) {
     console.error('Error reading the directory:', err);
-    return;
+    process.exit(1);
   }
 
   files.forEach(file => {

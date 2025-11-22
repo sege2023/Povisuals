@@ -32,25 +32,28 @@ async function downloadImages() {
     console.log(`Downloading ${files.length} images...`);
 
     for (const file of files) {
-      const fileUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
+      // file url not handling auth properly
+      // const fileUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
       const filePath = path.join(LOCAL_DIR, file.name);
+      const dest = fs.createWriteStream(filePath);
 
-      await new Promise((resolve, reject) => {
-        const fileStream = fs.createWriteStream(filePath);
-        
-        https.get(fileUrl, (response) => {
-          response.pipe(fileStream);
-          
-          fileStream.on('finish', () => {
-            fileStream.close();
-            resolve();
-          });
-          
-          fileStream.on('error', reject);
-        }).on('error', reject);
-      });
 
-      console.log(`Downloaded: ${file.name}`);
+      const response = await drive.files.get(
+        { fileId: file.id, alt: 'media' },
+        { responseType: 'stream' }
+      );
+
+      // https.get method cannot handle large files or redirect making issues with the repsonse.pip
+      response.data
+        .on('end', () => {
+          console.log(`Downloaded: ${file.name}`);
+        })
+        .on('error', (err) => {
+          console.error(`Error downloading ${file.name}:`, err);
+        })
+        .pipe(dest);
+    
+      // console.log(`Downloaded: ${file.name}`);
     }
 
     console.log('All images downloaded successfully!');

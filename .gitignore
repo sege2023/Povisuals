@@ -25,4 +25,6 @@ dist-ssr
 *.env
 config.js
 downloaded-images/
+download-images/
+povinstructions.md
 # /api
